@@ -164,7 +164,7 @@ public class CanvasScene extends LogicCanvas
                     {
                         if(!isDefaultCell) gc.setFill(Logic.replacementColor);
                         else gc.setFill(Color.WHITE);
-                        gc.fillRect(x * sizeCell + 1, y * sizeCell + 1, sizeCell - 2, sizeCell - 2);
+                        gc.fillRect(x * sizeCell, y * sizeCell, sizeCell, sizeCell);
                         // Перерисовываем ID поверх нового цвета
                         gc.setFill(Color.BLACK);
                     }

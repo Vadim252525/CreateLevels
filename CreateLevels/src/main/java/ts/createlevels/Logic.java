@@ -51,7 +51,7 @@ public class Logic
                     {
                         writer.print(masCanvasId[(y * Logic.canvasWidth) + x] + ",");
                     }
-                    writer.println();
+                    writer.print("\n");
                 }
                 writer.print("*");
                 for (int y = 0; y < canvasHeight; y++)
@@ -60,10 +60,10 @@ public class Logic
                     {
                         writer.print(masCanvasColor[(y * canvasWidth) + x] + ",");
                     }
-                    writer.println();
+                    writer.print("\n");
                 }
                 writer.print("*");
-                writer.println();
+                writer.print("\n");
                 writer.print("Width=" + canvasWidth + "\n*Height=" + canvasHeight + "\n*RepId=" + replacementClick + "\n*RepColor=" + replacementColor);
             }
             catch (Exception e)
@@ -86,10 +86,11 @@ public class Logic
             {
                 DirectoryChooser dir = new DirectoryChooser();
                 dir.setTitle("Экспорт уровня");
-                dir.setInitialDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+                dir.setInitialDirectory(new File(pathExport));
                 File selectDir = dir.showDialog(stage);
                 if(selectDir != null)
                 {
+                    pathSet(selectDir.getPath());
                     int b = x1, b2 = y1;
                     path = selectDir.toPath() + "/level" + ".txt";
                     try (PrintWriter writer = new PrintWriter(path))
@@ -102,7 +103,7 @@ public class Logic
                                 b2++;
                                 i += canvasWidth - x2 + x1 - 1;
                                 b = x1 - 1;
-                                writer.println();
+                                writer.print("\n");
                                 if(b2 == y2 + 1) break;
                             }
                             b++;
@@ -151,7 +152,7 @@ public class Logic
                 masCanvasColor = new Color[masLength];
                 for (short i = 0;i < masLength - 1;i++)
                 {
-                    masCanvasId[i] = masStr[i].trim();;
+                    masCanvasId[i] = masStr[i].trim();
                     masCanvasColor[i] = Color.web(masColor[i].trim().replace("0x", "#"));
                 }
                 stack.getChildren().clear();
@@ -162,6 +163,34 @@ public class Logic
                 Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
                 alert.showAndWait();
             }
+        }
+    }
+
+    public static void pathSet(String pathNew)
+    {
+        if(!new File("pathExport.txt").exists())
+        {
+            try
+            {
+                Files.write(Paths.get("pathExport.txt"), pathNew.getBytes());
+            }
+            catch (Exception e)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
+                alert.showAndWait();
+            }
+        }
+    }
+    public static void pathGet()
+    {
+        try
+        {
+            File file = new File("pathExport.txt");
+            pathExport = Files.readString(file.toPath());
+        }
+        catch (Exception e)
+        {
+            pathExport = System.getProperty("user.home") + "/Desktop";
         }
     }
 

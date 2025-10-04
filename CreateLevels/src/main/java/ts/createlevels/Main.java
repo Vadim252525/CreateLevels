@@ -16,6 +16,7 @@ public class Main extends Application
     {
         if(!new File("save").exists()) createDirectory("save");
 
+        Logic.pathGet();
         stage.setTitle("Создание 2D уровней - " + VERSION);
         stage.setMaximized(true);
         stage.setWidth(WIDTH);
